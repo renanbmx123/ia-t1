@@ -1,6 +1,6 @@
 import wx
 import wx.grid
-from maze import MazeGame
+from maze import Maze
 from manhattan_dist import getManhattanDistance
 
 
@@ -25,8 +25,6 @@ class Cell(wx.Panel):
         self.SetBackgroundColour((0, 0, 0))
 
 
-
-
 # Main grid panel
 class GridPanelFrame(wx.Frame):
     game = None
@@ -49,11 +47,11 @@ class GridPanelFrame(wx.Frame):
         panel.SetFocus()
         gridSizer = wx.GridSizer(12, 12, 0, 0)
 
-        self.game = MazeGame()
+        self.game = Maze()
         self.game.open_maze('map.txt')
         self.lastX = self.game.x
         self.lastY = self.game.y
-        print(self.game.board)
+
 
         # Create cells according to maze values
         for i in range(len(self.game.board)):
@@ -68,7 +66,6 @@ class GridPanelFrame(wx.Frame):
                     cell.SetBlue()
                 elif self.game.board[i][j] == 'S':
                     cell.SetGreen()
-
 
                 gridSizer.Add(cell, 0, wx.EXPAND)
                 self.cells[i].append(cell)
@@ -135,7 +132,6 @@ class GridPanelFrame(wx.Frame):
         if (char == 'Q'):
             self.timer.Stop()
             self.Destroy()
-
 
     def OnClose(self, event):
         self.timer.Stop()

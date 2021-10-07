@@ -1,5 +1,4 @@
-class MazeGame:
-
+class Maze:
     board = [[], [], [], [], [], [], [], [], [], [], [], []]
     goalX = 11
     goalY = 11
@@ -12,7 +11,8 @@ class MazeGame:
         self.board = [[], [], [], [], [], [], [], [], [], [], [], []]
         # read board
         # get file object
-    def open_maze(self,maze:str):
+
+    def open_maze(self, maze: str):
         f = open(maze, "r")
         index = 0
         while True:
@@ -67,7 +67,7 @@ class MazeGame:
                 self.steps += 1
                 return self.goal()
         else:
-            self.faults += 5
+            self.faults += 4
         return 0
 
     def goal(self):
@@ -85,40 +85,40 @@ class MazeGame:
             return False
 
     def blocked_goal(self):  # If yes, then return penalty
-        xLocked = False
-        yLocked = False
+        x_locked = False
+        y_locked = False
 
         if self.x < self.goalX:
             for i in range(self.x + 1, self.goalX + 1):
                 if self.board[self.y][i] == '1':
-                    xLocked = True
+                    x_locked = True
                     break
 
         elif self.x > self.goalX:
             for i in range(self.x - 1, self.goalX - 1, -1):
                 if self.board[self.y][i] == '1':
-                    xLocked = True
+                    x_locked = True
                     break
 
         if self.y < self.goalY:
             for i in range(self.y + 1, self.goalY + 1):
                 if self.board[i][self.x] == '1':
-                    yLocked = True
+                    y_locked = True
                     break
 
         elif self.y > self.goalY:
             for i in range(self.y - 1, self.goalY - 1, -1):
                 if self.board[i][self.x] == '1':
-                    yLocked = True
+                    y_locked = True
                     break
 
         # penalty
         penalty = 2
-        if xLocked and yLocked:
-            penalty = 7
-        elif self.x == self.goalX and yLocked:
-            penalty = 10
-        elif self.y == self.goalY and xLocked:
-            penalty = 10
+        if x_locked and y_locked:
+            penalty = 2
+        elif self.x == self.goalX and y_locked:
+            penalty = 4
+        elif self.y == self.goalY and x_locked:
+            penalty = 4
 
         return penalty
